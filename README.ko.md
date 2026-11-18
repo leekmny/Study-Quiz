@@ -1,10 +1,10 @@
-# Vibe Coding Study
+# Vibe Coding Study Quiz Program
 
 [한국어](README.ko.md) | [English](README.md)
 
 바이브 코딩 공부용으로 만든 퀴즈 앱입니다. HTML, CSS, JavaScript만으로 동작합니다.
 
-![QUIZ LAB 미리보기](docs/preview.png)
+![QUIZ LAB 한국어 미리보기](docs/preview-ko.png)
 
 ## 실행
 

@@ -1,4 +1,4 @@
-# Vibe Coding Study
+# Vibe Coding Study Quiz Program
 
 [한국어](README.ko.md) | [English](README.md)
 

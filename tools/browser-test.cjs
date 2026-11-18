@@ -133,6 +133,10 @@ function startServer() {
       path: path.join(output, "desktop-ko.png"),
       fullPage: true,
     });
+    await page.screenshot({
+      path: path.join(root, "docs", "preview-ko.png"),
+      fullPage: true,
+    });
     await page.locator("#language").selectOption("en");
     assert.equal(await page.locator("#start").innerText(), "Start a quiz");
     assert.equal(
