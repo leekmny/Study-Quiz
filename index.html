@@ -1,0 +1,413 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="A small bilingual quiz app for daily practice. Explore history, science, geography, and the arts, with your progress saved locally."
+    />
+    <meta name="theme-color" content="#f6f3eb" />
+    <title>QUIZ LAB · 작은 상식 노트</title>
+    <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main>
+      <header>
+        <a class="brand" href="index.html" aria-label="QUIZ LAB"
+          ><span class="brand-mark" aria-hidden="true">q.</span> QUIZ
+          <span>LAB</span></a
+        >
+        <small class="header-note" data-i18n="tagline"
+          >매일 조금씩, 더 넓은 세상</small
+        >
+        <nav aria-label="Main navigation">
+          <a
+            class="teacher-link"
+            href="#teacherTools"
+            data-i18n="teacherDashboard"
+            >선생님 대시보드 ↗</a
+          >
+          <label class="language-control"
+            ><span class="sr-only" data-i18n="languageLabel">언어</span
+            ><select id="language" data-i18n-aria-label="languageLabel">
+              <option value="ko">한국어</option>
+              <option value="en">English</option>
+            </select></label
+          >
+        </nav>
+      </header>
+
+      <section id="setup" aria-labelledby="welcomeTitle">
+        <div class="hero">
+          <div class="hero-copy">
+            <p class="eyebrow">A LITTLE EVERY DAY</p>
+            <h1 id="welcomeTitle" data-i18n="heroTitle">
+              아는 즐거움을, 하나씩.
+            </h1>
+            <p class="lead" data-i18n="heroLead">
+              한국사부터 과학, 지리와 예술까지. 짧은 퀴즈로 호기심을 채우고
+              나만의 배움을 쌓아보세요.
+            </p>
+            <div class="stats">
+              <span
+                ><b id="questionCount">0</b>
+                <small data-i18n="questionsLabel">개의 질문</small></span
+              ><span
+                ><b>4</b>
+                <small data-i18n="categoriesLabel">가지 분야</small></span
+              ><span
+                ><b>5</b>
+                <small data-i18n="challengesLabel">가지 도전</small></span
+              >
+            </div>
+          </div>
+          <div class="hero-art" aria-hidden="true">
+            <div class="art-grid"></div>
+            <div class="orbit"></div>
+            <div class="study-note">
+              <span>THE CURIOSITY CLUB</span>
+              <div class="note-rule"></div>
+              <b>Stay<br />curious<span>✳</span></b>
+              <p>ONE QUESTION AT A TIME.</p>
+            </div>
+            <span class="topic history"
+              >史 <small data-i18n="categoryHistory">한국사</small></span
+            >
+            <span class="topic science"
+              >✳ <small data-i18n="categoryScience">과학</small></span
+            >
+            <span class="topic world"
+              >◎ <small data-i18n="categoryGeography">지리</small></span
+            >
+            <span class="topic art"
+              >♫ <small data-i18n="categoryArts">예술과 문화</small></span
+            >
+          </div>
+        </div>
+
+        <div class="workspace-grid">
+          <div class="main-column">
+            <section class="challenge-panel" aria-labelledby="challengeTitle">
+              <p class="eyebrow">FIND YOUR RHYTHM</p>
+              <h2 id="challengeTitle" data-i18n="challengeTitle">
+                오늘의 도전을 골라보세요
+              </h2>
+              <div
+                class="modes"
+                role="group"
+                data-i18n-aria-label="challengeTitle"
+              >
+                <button
+                  type="button"
+                  data-mode="all"
+                  class="selected"
+                  aria-pressed="true"
+                >
+                  <i aria-hidden="true">↗</i
+                  ><strong data-i18n="modeAll">골고루 풀기</strong
+                  ><span data-i18n="modeAllDesc">네 분야를 오가며 새롭게</span>
+                </button>
+                <button type="button" data-mode="category" aria-pressed="false">
+                  <i aria-hidden="true">▤</i
+                  ><strong data-i18n="modeCategory">분야별 연습</strong
+                  ><span data-i18n="modeCategoryDesc"
+                    >관심 있는 주제를 깊게</span
+                  >
+                </button>
+                <button type="button" data-mode="speed" aria-pressed="false">
+                  <i aria-hidden="true">◷</i
+                  ><strong data-i18n="modeSpeed">스피드 퀴즈</strong
+                  ><span data-i18n="modeSpeedDesc">한 문제에 15초</span>
+                </button>
+                <button type="button" data-mode="review" aria-pressed="false">
+                  <i aria-hidden="true">↺</i
+                  ><strong data-i18n="modeReview">오답 다시 풀기</strong
+                  ><span data-i18n="modeReviewDesc"
+                    >헷갈렸던 문제를 한 번 더</span
+                  >
+                </button>
+                <button type="button" data-mode="daily" aria-pressed="false">
+                  <i aria-hidden="true">☼</i
+                  ><strong data-i18n="modeDaily">오늘의 10문제</strong
+                  ><span data-i18n="modeDailyDesc">매일 바뀌는 작은 도전</span>
+                </button>
+              </div>
+              <div
+                class="filters session-settings"
+                role="group"
+                data-i18n-aria-label="openSettings"
+              >
+                <label id="categoryLabel" hidden
+                  ><span data-i18n="categoryLabel">도전 분야</span
+                  ><select id="category">
+                    <option value="한국사" data-i18n="categoryHistory">
+                      한국사
+                    </option>
+                    <option value="과학" data-i18n="categoryScience">
+                      과학
+                    </option>
+                    <option value="지리" data-i18n="categoryGeography">
+                      지리
+                    </option>
+                    <option value="예술과 문화" data-i18n="categoryArts">
+                      예술과 문화
+                    </option>
+                  </select></label
+                >
+                <label
+                  ><span data-i18n="difficultyLabel">난이도</span
+                  ><select id="difficulty">
+                    <option value="all" data-i18n="allDifficulties">
+                      모든 난이도
+                    </option>
+                    <option value="easy" data-i18n="easy">초급</option>
+                    <option value="medium" data-i18n="medium">중급</option>
+                    <option value="hard" data-i18n="hard">고급</option>
+                  </select></label
+                >
+                <label
+                  ><span data-i18n="lengthLabel">문항 수</span
+                  ><select id="sessionLength">
+                    <option value="10" data-i18n="length10">10문제</option>
+                    <option value="20" data-i18n="length20">20문제</option>
+                    <option value="all" data-i18n="lengthAll">전체 문항</option>
+                  </select></label
+                >
+              </div>
+              <p
+                id="sessionNote"
+                class="session-note setting-note"
+                role="status"
+                data-i18n="selectedHelp"
+              >
+                문제와 보기 순서는 매번 새롭게 섞입니다.
+              </p>
+              <div class="actions start-actions">
+                <button
+                  class="primary"
+                  id="start"
+                  type="button"
+                  data-i18n="start"
+                >
+                  퀴즈 시작하기
+                </button>
+                <p data-i18n="scoringHelp">
+                  정답 10점 · 힌트 사용 시 5점 · 숫자 1–4로 선택, Enter로 다음
+                  문제
+                </p>
+              </div>
+            </section>
+
+            <section
+              class="board learning-card"
+              aria-labelledby="learningTitle"
+            >
+              <p class="eyebrow">YOUR LEARNING, OVER TIME</p>
+              <h2 id="learningTitle" data-i18n="learningTitle">
+                학습 대시보드
+              </h2>
+              <p class="section-note" data-i18n="learningNote">
+                완료한 도전을 바탕으로 나의 학습 흐름을 확인해요.
+              </p>
+              <div id="learningDashboard"></div>
+            </section>
+            <section class="board ranking-card" aria-labelledby="rankingTitle">
+              <p class="eyebrow">YOUR PERSONAL BEST</p>
+              <h2 id="rankingTitle" data-i18n="rankingTitle">나의 최고 기록</h2>
+              <p class="section-note" data-i18n="rankingNote">
+                이 브라우저에 저장됩니다
+              </p>
+              <ol id="ranking"></ol>
+              <p id="storageNote" role="status"></p>
+            </section>
+          </div>
+
+          <aside class="board profile-card" aria-labelledby="profileTitle">
+            <div class="profile-illustration" aria-hidden="true">
+              <span>✳</span><b>my little<br />study corner.</b><span>↗</span>
+            </div>
+            <p class="eyebrow">MAKE IT YOURS</p>
+            <h2 id="profileTitle" data-i18n="profileTitle">나의 학습 공간</h2>
+            <p class="profile-description" data-i18n="profileDescription">
+              별명 하나로 나만의 배움을 기록하세요.
+            </p>
+            <div class="profile-fields">
+              <label
+                ><span data-i18n="name">이름</span
+                ><input
+                  id="profileName"
+                  maxlength="50"
+                  autocomplete="off"
+                  data-i18n-placeholder="profileNamePlaceholder"
+                  placeholder="별명으로도 충분해요" /></label
+              ><label class="avatar-field"
+                ><span data-i18n="avatar">아바타</span
+                ><select id="profileAvatar">
+                  <option>🌱</option>
+                  <option>🦊</option>
+                  <option>🐱</option>
+                  <option>🐻</option>
+                </select></label
+              >
+            </div>
+            <button id="saveProfile" type="button" data-i18n="saveProfile">
+              프로필 저장
+            </button>
+            <p id="personalStats"></p>
+            <p id="accountStatus" role="status"></p>
+            <p class="privacy-note" data-i18n="privacyNote">
+              가입 없이, 이 브라우저에만 저장
+            </p>
+            <div class="record-tools account-tools">
+              <button
+                id="exportRecords"
+                type="button"
+                data-i18n="exportRecords"
+              >
+                내 기록 JSON 내보내기</button
+              ><label class="file-label"
+                ><span data-i18n="importRecords">내 기록 복원·병합</span>
+                <span class="file-prompt" data-i18n="chooseFile"
+                  >JSON 파일 선택</span
+                >
+                <input
+                  id="importRecords"
+                  class="sr-only"
+                  type="file"
+                  accept=".json,application/json"
+              /></label>
+            </div>
+            <details>
+              <summary data-i18n="allRecords">전체 기록 보기</summary>
+              <ol id="allRecords"></ol>
+            </details>
+            <details id="teacherTools" class="teacher-tools">
+              <summary data-i18n="teacherMode">
+                선생님 모드 · 학생 기록 가져오기
+              </summary>
+              <p class="section-note" data-i18n="teacherHelp">
+                학생별로 내보낸 JSON을 선택하세요. 선택한 파일만 읽으며 브라우저
+                기록을 자동 수집하지 않습니다.
+              </p>
+              <label class="file-label">
+                <span class="file-prompt" data-i18n="chooseFiles"
+                  >학생 기록 파일 선택</span
+                >
+                <input
+                  id="teacherFiles"
+                  class="sr-only"
+                  type="file"
+                  accept=".json,application/json"
+                  multiple
+                  data-i18n-aria-label="teacherMode"
+                />
+              </label>
+              <p id="teacherStatus" role="status"></p>
+              <div class="teacher-actions report-actions">
+                <button
+                  id="teacherDownload"
+                  type="button"
+                  disabled
+                  data-i18n="downloadHTML"
+                >
+                  교사용 HTML 저장</button
+                ><button
+                  id="teacherCSV"
+                  type="button"
+                  disabled
+                  data-i18n="downloadCSV"
+                >
+                  CSV 저장
+                </button>
+              </div>
+              <iframe
+                id="teacherPreview"
+                title="교사용 보고서 미리보기"
+                data-i18n-title="teacherPreview"
+                sandbox
+              ></iframe>
+            </details>
+          </aside>
+        </div>
+      </section>
+
+      <section id="play" class="play-card" hidden aria-labelledby="question">
+        <div class="topline">
+          <span id="badge"></span><span id="position"></span><b id="score"></b
+          ><span id="timer" role="timer"></span>
+        </div>
+        <progress
+          id="progress"
+          value="0"
+          max="1"
+          aria-label="Quiz progress"
+        ></progress>
+        <h1 id="question" tabindex="-1"></h1>
+        <div id="options"></div>
+        <div class="actions">
+          <button id="hint" type="button" data-i18n="hint">
+            힌트 사용 · 정답 점수 −5</button
+          ><button id="home" type="button" data-i18n="home">그만하기</button>
+        </div>
+        <p id="hintText" role="status" aria-live="polite" hidden></p>
+        <section id="feedback" role="status" aria-live="polite" hidden>
+          <h2 id="verdict"></h2>
+          <p id="explanation"></p>
+          <p id="sourceNote"></p>
+          <button id="next" class="primary" type="button" data-i18n="next">
+            다음 문제 →
+          </button>
+        </section>
+      </section>
+
+      <section
+        id="result"
+        class="result-card"
+        hidden
+        aria-labelledby="resultTitle"
+      >
+        <p class="eyebrow">A LITTLE MORE LEARNED</p>
+        <h1 id="resultTitle" data-i18n="resultTitle">
+          오늘도 하나 더 배웠어요.
+        </h1>
+        <p id="summary" class="lead"></p>
+        <div id="breakdown"></div>
+        <h2 data-i18n="reviewTitle">틀린 문제 다시 보기</h2>
+        <div id="review"></div>
+        <div class="actions">
+          <button id="retryWrong" type="button" hidden data-i18n="retryWrong">
+            틀린 문제 다시 풀기</button
+          ><button
+            id="restart"
+            class="primary"
+            type="button"
+            data-i18n="restart"
+          >
+            새로운 도전 →
+          </button>
+        </div>
+      </section>
+      <footer>
+        <b>QUIZ LAB</b
+        ><span data-i18n="footerTagline">호기심을 기록하는 작은 습관.</span
+        ><small>MADE FOR THE LOVE OF LEARNING.</small>
+      </footer>
+    </main>
+    <script src="questions.js"></script>
+    <script src="questions-en.js"></script>
+    <script src="local-data.js"></script>
+    <script src="reports.js"></script>
+    <script src="i18n.js"></script>
+    <script src="script.js"></script>
+    <script src="account-ui.js"></script>
+    <script>
+      document.getElementById("questionCount").textContent =
+        quizQuestions.length;
+      document.querySelector(".teacher-link").addEventListener("click", () => {
+        document.getElementById("teacherTools").open = true;
+      });
+    </script>
+  </body>
+</html>
