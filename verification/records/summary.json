@@ -1,0 +1,8 @@
+{
+  "op": "records-summary",
+  "records": [
+    {"mode":"all","date":"2026-11-16","total":3,"score":10,"questionIds":[5,17,99],"missedIds":[17,99]},
+    {"id":"second","mode":"speed","date":"2026-11-17","total":2,"score":5,"correct":1,"answers":[{"questionId":17,"correct":true},{"questionId":42,"correct":false}]},
+    {"id":"third","mode":"review","date":"2026-11-18","total":1,"score":10,"correct":1,"answers":[{"questionId":99,"correct":true}]}
+  ]
+}

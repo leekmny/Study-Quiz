@@ -1,0 +1,13 @@
+{
+  "op": "quiz",
+  "mode": "review",
+  "missedIds": [9, 26, 24, 999],
+  "difficulty": "easy",
+  "random": [0.3, 0.9],
+  "actions": [
+    {"action": "wrong"},
+    {"action": "next"},
+    {"action": "correct"},
+    {"action": "next"}
+  ]
+}

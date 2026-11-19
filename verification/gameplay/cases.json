@@ -1,0 +1,10 @@
+[
+  {"id":"daily-deterministic","fixture":"daily.json"},
+  {"id":"daily-next-date","fixture":"daily-next.json"},
+  {"id":"filtered-english-game","fixture":"category.json"},
+  {"id":"speed-deadline","fixture":"speed.json"},
+  {"id":"review-legacy-misses","fixture":"review.json"},
+  {"id":"review-explicit-ids","fixture":"review-explicit.json"},
+  {"id":"review-empty","fixture":"review-empty.json"},
+  {"id":"all-shuffle-length","fixture":"all.json"}
+]

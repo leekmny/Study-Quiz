@@ -97,6 +97,8 @@ function makePool(explicitIds) {
 }
 function localizedQuestion(q) {
   if (I18n.lang !== "en" || typeof quizQuestionsEN === "undefined") return q;
+  if (typeof globalThis.studyQuizGo === "function")
+    return goEngine({ op: "localize", question: q, language: "en" });
   const translated = quizQuestionsEN.find((item) => item.id === q.id);
   if (!translated) return q;
   return {
@@ -108,6 +110,10 @@ function localizedQuestion(q) {
   };
 }
 function start(explicitIds) {
+  if (globalThis.studyQuizGoReady) {
+    startGo(explicitIds);
+    return;
+  }
   stop();
   const pool = makePool(Array.isArray(explicitIds) ? explicitIds : null);
   if (!pool.length) {
@@ -133,6 +139,84 @@ function start(explicitIds) {
   };
   show("play");
   load();
+}
+function goEngine(request) {
+  const response = JSON.parse(globalThis.studyQuizGo(JSON.stringify(request)));
+  if (!response.ok) throw Error(response.error);
+  return response.result;
+}
+async function waitForGoEngine() {
+  const engine = await globalThis.studyQuizGoReady;
+  if (!engine.ready) throw engine.error;
+}
+async function startGo(explicitIds) {
+  stop();
+  const button = $("start");
+  button.disabled = true;
+  try {
+    await waitForGoEngine();
+    const date = new Date();
+    const calendarDate = [
+      String(date.getFullYear()).padStart(4, "0"),
+      String(date.getMonth() + 1).padStart(2, "0"),
+      String(date.getDate()).padStart(2, "0"),
+    ].join("-");
+    state = goEngine({
+      op: "start",
+      mode,
+      category: $("category")?.value,
+      difficulty: $("difficulty")?.value,
+      length: Number($("sessionLength")?.value) || 0,
+      ids: Array.isArray(explicitIds) ? explicitIds : undefined,
+      missedIds: mode === "review" ? missedQuestionIds() : undefined,
+      now: date.getTime(),
+      date: calendarDate,
+    });
+    if (!state) {
+      show("setup");
+      $("sessionNote").textContent = tr(
+        mode === "review" ? "emptyReview" : "noQuestions",
+      );
+      return;
+    }
+    $("sessionNote").textContent = "";
+    show("play");
+    loadGo();
+  } catch (error) {
+    show("setup");
+    $("sessionNote").textContent = String(error);
+  } finally {
+    button.disabled = false;
+  }
+}
+function loadGo() {
+  stop();
+  paintQuestion();
+  $("question").focus();
+  if (mode === "speed")
+    timer = setInterval(() => {
+      timerText();
+      if (Date.now() >= state.deadline) goStep("tick");
+    }, 100);
+}
+function goStep(action, index) {
+  if (!state || state.finished) return;
+  try {
+    const result = goEngine({ op: "step", action, state, mode, now: Date.now(), index });
+    if (!result.changed) return;
+    state = result.state;
+    if (state.finished) finish(true);
+    else if (action === "next") loadGo();
+    else {
+      if (state.answered) stop();
+      paintQuestion();
+    }
+  } catch (error) {
+    stop();
+    state = null;
+    show("setup");
+    $("sessionNote").textContent = String(error);
+  }
 }
 function timerText() {
   if (!state) return;
@@ -224,6 +308,7 @@ function load() {
     }, 100);
 }
 function answer(index) {
+  if (globalThis.studyQuizGoReady) return goStep("answer", index);
   if (!state || state.answered || state.finished) return;
   if (mode === "speed" && Date.now() >= state.deadline) index = -1;
   if (
@@ -244,6 +329,7 @@ function answer(index) {
   paintQuestion();
 }
 function hint() {
+  if (globalThis.studyQuizGoReady) return goStep("hint");
   if (!state || state.answered || state.hint) return;
   if (mode === "speed" && Date.now() >= state.deadline) {
     answer(-1);
@@ -256,6 +342,7 @@ function hint() {
   paintQuestion();
 }
 function next() {
+  if (globalThis.studyQuizGoReady) return goStep("next");
   if (!state?.answered || state.finished) return;
   state.index++;
   if (state.index < state.pool.length) load();
@@ -296,8 +383,8 @@ function paintResult() {
   if ($("retryWrong"))
     $("retryWrong").hidden = state.answers.every((a) => a.ok);
 }
-function finish() {
-  if (state.finished) return;
+function finish(finishedByEngine = false) {
+  if (state.finished && !finishedByEngine) return;
   stop();
   state.finished = true;
   show("result");

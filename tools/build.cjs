@@ -1,7 +1,6 @@
 const fs = require("node:fs");
 const path = require("node:path");
 const root = path.resolve(__dirname, "..");
-const output = path.join(root, "dist");
 const files = [
   "index.html",
   "style.css",
@@ -15,9 +14,10 @@ const files = [
   "assets/favicon.svg",
 ];
 
-function build() {
+function build(directory = "dist") {
+  const output = path.join(root, directory);
   // Always construct a fresh directory so old exports cannot enter a deployment.
-  if (path.dirname(output) !== root || path.basename(output) !== "dist")
+  if (path.dirname(output) !== root || !["dist", "dist-go"].includes(directory))
     throw Error("Invalid build directory");
   fs.rmSync(output, { recursive: true, force: true });
   fs.mkdirSync(output, { recursive: true });
@@ -32,7 +32,7 @@ function build() {
     reports.html(reports.aggregate([]), "ko"),
   );
   console.log(
-    "Built public app in dist/ (no saved records or imported reports).",
+    `Built public app in ${directory}/ (no saved records or imported reports).`,
   );
   return output;
 }

@@ -4,6 +4,10 @@
 
 A quiz app for vibe coding practice. Built with HTML, CSS, and JavaScript.
 
+On the `port/go-quiz` branch, run `npm ci` and `npm run build:go` with
+Go 1.24+ or Docker Desktop's Linux engine, then open `dist-go/index.html` offline.
+See [Go port and RECHECK reproduction](docs/go-port-cli.md).
+
 ![QUIZ LAB preview](docs/preview.png)
 
 ## Run

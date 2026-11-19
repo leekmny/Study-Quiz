@@ -1,0 +1,4 @@
+{
+  "op": "report-aggregate",
+  "files": [{ "name": "synthetic-malformed.json", "data": { "records": null } }]
+}

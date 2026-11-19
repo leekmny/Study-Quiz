@@ -1,0 +1,8 @@
+[
+  { "id": "teacher-empty-import", "fixture": "empty.json" },
+  { "id": "teacher-grades-boundaries-and-ties", "fixture": "grades.json" },
+  { "id": "teacher-aggregate-latest-weighted-and-excluded", "fixture": "aggregate.json" },
+  { "id": "teacher-csv-korean-from-imports", "fixture": "csv-files.json" },
+  { "id": "teacher-csv-english-from-aggregate", "fixture": "csv-data.json" },
+  { "id": "teacher-malformed-import", "fixture": "malformed.json" }
+]

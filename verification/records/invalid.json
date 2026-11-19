@@ -1,0 +1,10 @@
+{
+  "op": "records-valid",
+  "record": {
+    "mode": "speed",
+    "date": "2026-11-18",
+    "total": 1,
+    "score": 5,
+    "answers": [{"questionId": 0, "correct": true}]
+  }
+}

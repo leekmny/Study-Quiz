@@ -1,0 +1,139 @@
+{
+  "schema_version": "study-quiz-recheck-summary-1",
+  "upstream_commit": "ce88328beff36b2a5f3273051397a22029aa8995",
+  "run_id": "run_5445cebc05c34f75a8de298f24372228",
+  "manifest_sha256": "23ff9e0ee36fafaabc1688bfafd9fbbdeff1fdeb7ed8680c9a0f96006ed8ae94",
+  "result_sha256": "42e1e85a0dc2adb6b426158d0cf525ebf2f643c74002dfb495832ce7158aa7ce",
+  "worker": {
+    "os": "linux",
+    "arch": "x64",
+    "isolation": "docker",
+    "emulated": false,
+    "image_id": "sha256:34d65fa034ac7dccc9caf348c6cb54774324a2d23d8d4283eb16176d0ce2e91e",
+    "worker_code_sha256": "9214f18c41ba9205ef8d7b0f86fa241d4fbfca9270c81a46c7ee7b6de59a2ebe"
+  },
+  "targets": {
+    "reference": {
+      "entry_sha256": "e01e7e1bc366b7f3e74eddb2692e9f536287cbf8297bc29fbca06b31b70df37d",
+      "runtime_version": "24.22.3"
+    },
+    "candidate": {
+      "entry_sha256": "37b32fdcd4bc4cce9f12990698fe9c54b8a61847f33cd2cb234644494b6dae9e"
+    }
+  },
+  "behavior": {
+    "registered": 18,
+    "attempted": 18,
+    "attempts": 18,
+    "steps": 0,
+    "process_executions": 36,
+    "process_observation_unknown": 0,
+    "matched": 18,
+    "mismatched": 0,
+    "denominator": 18,
+    "match_rate": 1.0,
+    "outcomes": {
+      "matched": 18
+    },
+    "execution_statuses": {
+      "completed": 36
+    },
+    "requirement_counts": {
+      "passed": 18
+    },
+    "acceptance": "passed",
+    "formula": "일치한 시나리오 / 모든 등록 반복에서 양쪽 관찰이 비교 가능한 시나리오"
+  },
+  "scenarios": [
+    {
+      "id": "daily-deterministic",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "daily-next-date",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "filtered-english-game",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "speed-deadline",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "review-legacy-misses",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "review-explicit-ids",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "review-empty",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "all-shuffle-length",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "records-filter-deduplicate",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "records-weighted-mastery",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "records-reject-invalid",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "records-no-attempts",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "teacher-empty-import",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "teacher-grades-boundaries-and-ties",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "teacher-aggregate-latest-weighted-and-excluded",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "teacher-csv-korean-from-imports",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "teacher-csv-english-from-aggregate",
+      "outcome": "matched",
+      "acceptance": "passed"
+    },
+    {
+      "id": "teacher-malformed-import",
+      "outcome": "matched",
+      "acceptance": "passed"
+    }
+  ]
+}

@@ -1,0 +1,22 @@
+{
+  "op": "report-csv",
+  "lang": "ko",
+  "files": [
+    {
+      "name": "synthetic-csv.json",
+      "data": {
+        "records": [
+          {
+            "studentId": "fixture-csv", "name": " =SUM(1, 2) \"표본\"\n둘째 줄",
+            "score": 97, "total": 800, "correct": 97, "mode": "all",
+            "date": "2026-11-18", "completedAt": "2026-11-18T01:00:00Z"
+          },
+          {
+            "studentId": "fixture-legacy", "score": 1, "total": 1, "mode": "daily",
+            "date": "2026-11-18", "completedAt": "2026-11-18T02:00:00Z"
+          }
+        ]
+      }
+    }
+  ]
+}

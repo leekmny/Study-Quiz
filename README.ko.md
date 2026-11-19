@@ -4,6 +4,21 @@
 
 바이브 코딩 공부용으로 만든 퀴즈 앱입니다. HTML, CSS, JavaScript만으로 동작합니다.
 
+## Go 포팅판 실행
+
+`port/go-quiz` 브랜치에서는 기존 화면에서 Go WebAssembly로 문제 선택, 채점,
+시간초과, 기록 정리·통계 및 교사 보고서 집계·CSV를 실행할 수 있습니다.
+Node.js 22 이상과 Go 1.24 이상 또는 Linux 컨테이너가 켜진 Docker Desktop을 준비하세요.
+
+```sh
+npm ci
+npm run build:go
+```
+
+`dist-go/index.html`을 브라우저에서 열면 오프라인으로 실행됩니다.
+원본과 포팅판을 다른 주소나 파일 경로에서 열 경우에는 원본의 기록 JSON을
+내보낸 뒤 포팅판에서 가져오세요. [비교 및 CLI 재현 방법](docs/go-port-cli.md)
+
 ![QUIZ LAB 한국어 미리보기](docs/preview-ko.png)
 
 ## 실행

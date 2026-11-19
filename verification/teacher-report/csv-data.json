@@ -1,0 +1,17 @@
+{
+  "op": "report-csv",
+  "lang": "en",
+  "data": {
+    "rows": [
+      {
+        "studentId": "fixture-a", "name": "\uFEFF\t@example", "rank": 1,
+        "score": 5, "total": 10, "correct": 1, "accuracy": 2.675, "mode": "과학",
+        "completedAt": "2026-11-18T08:00:00Z", "grade": "A"
+      },
+      {
+        "studentId": "fixture-b", "name": "Legacy fixture", "score": 5, "total": 10,
+        "mode": "daily", "completedAt": "2026-11-18T07:00:00Z", "grade": "미수집"
+      }
+    ]
+  }
+}

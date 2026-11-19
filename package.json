@@ -7,8 +7,10 @@
     "start": "node tools/serve.cjs",
     "test": "node tools/test-questions.cjs && node tools/test.cjs && node tools/test-engine.cjs && node tools/test-i18n.cjs && node tools/test-local-data.cjs && node tools/test-grades.cjs && node tools/test-build.cjs",
     "test:browser": "node tools/browser-test.cjs && node tools/test-teacher-report.cjs",
+    "test:go:browser": "npm run build:go && node tools/browser-test.cjs --go",
     "check": "node tools/quiz-tools.cjs validate",
-    "build": "node tools/build.cjs"
+    "build": "node tools/build.cjs",
+    "build:go": "node tools/build-go.cjs"
   },
   "engines": {
     "node": ">=22"

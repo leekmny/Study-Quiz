@@ -1,0 +1,14 @@
+{
+  "op": "quiz",
+  "mode": "daily",
+  "date": "2026-11-18",
+  "difficulty": "hard",
+  "length": 1,
+  "random": [0.75, 0.1, 0.6, 0],
+  "actions": [
+    {"action": "hint"},
+    {"action": "correct"},
+    {"action": "next"},
+    {"action": "wrong"}
+  ]
+}

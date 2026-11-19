@@ -1,0 +1,18 @@
+{
+  "op": "quiz",
+  "mode": "speed",
+  "ids": [1, 2, 3],
+  "now": 1000,
+  "random": [0],
+  "actions": [
+    {"action": "tick", "at": 15999},
+    {"action": "hint", "after": 1},
+    {"action": "correct"},
+    {"action": "next"},
+    {"action": "hint", "after": 5},
+    {"action": "correct"},
+    {"action": "next"},
+    {"action": "tick", "after": 15000},
+    {"action": "next"}
+  ]
+}

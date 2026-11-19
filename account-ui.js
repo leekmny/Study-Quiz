@@ -261,7 +261,26 @@ $("teacherFiles").onchange = async (event) => {
         data: JSON.parse((await file.text()).replace(/^\uFEFF/, "")),
       })),
     );
-    const result = QuizReports.aggregate(imports);
+    if (globalThis.studyQuizGoReady) await waitForGoEngine();
+    const result = globalThis.studyQuizGoReady
+      ? goEngine({
+          op: "report-aggregate",
+          files: imports.map((file) => ({
+            ...file,
+            completionTimes: Array.isArray(file.data?.records)
+              ? file.data.records.map((record) => {
+                  if (!record?.completedAt) return null;
+                  try {
+                    const time = Date.parse(record.completedAt);
+                    return Number.isFinite(time) ? time : null;
+                  } catch {
+                    return null;
+                  }
+                })
+              : undefined,
+          })),
+        })
+      : QuizReports.aggregate(imports);
     if (selection !== teacherSelection) return;
     teacherResult = result;
     refreshTeacherPreview();
@@ -289,12 +308,23 @@ $("teacherDownload").onclick = () => {
     );
 };
 $("teacherCSV").onclick = () => {
-  if (teacherResult)
+  if (!teacherResult) return;
+  try {
+    const lang = accountLanguage();
+    const content = globalThis.studyQuizGoReady
+      ? goEngine({ op: "report-csv", data: teacherResult, lang })
+      : QuizReports.csv(teacherResult, lang);
     accountDownload(
       "report_detailed.csv",
-      QuizReports.csv(teacherResult, accountLanguage()),
+      content,
       "text/csv;charset=utf-8",
     );
+  } catch {
+    $("teacherStatus").textContent = accountText(
+      "CSV를 내보낼 수 없습니다.",
+      "Could not export the CSV report.",
+    );
+  }
 };
 document.addEventListener("languagechange", () => {
   accountRefresh();

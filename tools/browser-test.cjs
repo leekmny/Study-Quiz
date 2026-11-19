@@ -6,7 +6,9 @@ const fs = require("node:fs");
 const http = require("node:http");
 const { pathToFileURL } = require("node:url");
 const root = path.resolve(__dirname, "..");
-const output = path.join(root, "test-results");
+const testGo = process.argv.includes("--go");
+const publicRoot = testGo ? path.join(root, "dist-go") : root;
+const output = path.join(root, "test-results", ...(testGo ? ["go"] : []));
 const checks = [],
   errors = [];
 
@@ -87,11 +89,11 @@ function startServer() {
       return;
     }
     const target = path.resolve(
-      root,
+      publicRoot,
       "." + decodeURIComponent(pathname === "/" ? "/index.html" : pathname),
     );
     if (
-      !target.startsWith(root + path.sep) ||
+      !target.startsWith(publicRoot + path.sep) ||
       !fs.existsSync(target) ||
       !fs.statSync(target).isFile()
     ) {
@@ -123,7 +125,14 @@ function startServer() {
     });
     const page = await context.newPage();
     watchErrors(page);
-    await page.goto(pathToFileURL(path.join(root, "index.html")).href);
+    await page.goto(pathToFileURL(path.join(publicRoot, "index.html")).href);
+    if (testGo) {
+      assert.equal(
+        await page.evaluate(async () => Boolean((await globalThis.studyQuizGoReady)?.ready)),
+        true,
+        "Go WebAssembly engine must be initialized in the browser",
+      );
+    }
     assert.equal(await page.locator("html").getAttribute("lang"), "ko");
     assert.equal(
       await page.locator("#questionCount").innerText(),
@@ -133,10 +142,11 @@ function startServer() {
       path: path.join(output, "desktop-ko.png"),
       fullPage: true,
     });
-    await page.screenshot({
-      path: path.join(root, "docs", "preview-ko.png"),
-      fullPage: true,
-    });
+    if (!testGo)
+      await page.screenshot({
+        path: path.join(root, "docs", "preview-ko.png"),
+        fullPage: true,
+      });
     await page.locator("#language").selectOption("en");
     assert.equal(await page.locator("#start").innerText(), "Start a quiz");
     assert.equal(
@@ -394,10 +404,10 @@ function startServer() {
     });
     const preview = await clean.newPage();
     watchErrors(preview);
-    await preview.goto(pathToFileURL(path.join(root, "index.html")).href);
+    await preview.goto(pathToFileURL(path.join(publicRoot, "index.html")).href);
     await preview.locator("#language").selectOption("en");
     await preview.screenshot({
-      path: path.join(root, "docs", "preview.png"),
+      path: testGo ? path.join(output, "preview.png") : path.join(root, "docs", "preview.png"),
       fullPage: true,
     });
     await clean.close();

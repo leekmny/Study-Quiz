@@ -1,0 +1,12 @@
+{
+  "op": "records-normalize",
+  "records": [
+    {"id":"new","mode":"all","date":"2026-11-17","total":5,"score":25,"correct":3,"untrusted":"removed","categories":{"과학":{"correct":3,"total":5,"extra":true},"지리":{"correct":2,"total":1}}},
+    {"id":"new","mode":"daily","date":"2026-11-18","total":10,"score":100,"correct":10},
+    {"mode":"category","date":"2026-11-18","total":2,"score":5,"missedIds":[8],"questionIds":[3,8],"categories":[{"correct":1,"total":2}]},
+    {"mode":"category","date":"2026-11-18","total":2,"score":5},
+    {"mode":"speed","date":"2026-11-19","total":1,"score":100},
+    {"mode":"daily","date":"2026-11-20","total":10,"score":10,"answers":[{"questionId":2,"correct":"false"}]},
+    null
+  ]
+}

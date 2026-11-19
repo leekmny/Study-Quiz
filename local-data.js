@@ -99,6 +99,21 @@
   const chronological = (a, b) =>
     (Date.parse(a.completedAt || a.date) || 0) -
     (Date.parse(b.completedAt || b.date) || 0);
+  function goRecords(operation, values) {
+    const response = JSON.parse(
+      root.studyQuizGo(JSON.stringify({ op: operation, ...values })),
+    );
+    if (!response.ok) throw Error(response.error);
+    return response.result;
+  }
+  const normalizeRecords = (records) =>
+    typeof root.studyQuizGo === "function"
+      ? goRecords("records-normalize", { records: Array.isArray(records) ? records : [] })
+      : normalize(records);
+  const validateRecord = (record) =>
+    typeof root.studyQuizGo === "function" && record && typeof record === "object"
+      ? goRecords("records-valid", { record })
+      : validRecord(record);
   class LocalDataManager {
     constructor(storage) {
       this.storage = storage;
@@ -116,7 +131,7 @@
       this.storage.setItem(key, JSON.stringify(value));
     }
     records() {
-      return normalize(this.read("quizlab-records", []))
+      return normalizeRecords(this.read("quizlab-records", []))
         .sort(chronological)
         .slice(-100)
         .sort(order);
@@ -143,7 +158,7 @@
       return p;
     }
     save(record) {
-      if (!validRecord(record)) throw Error("잘못된 응시 기록");
+      if (!validateRecord(record)) throw Error("잘못된 응시 기록");
       const raw = this.storage.getItem("quizlab-records");
       if (raw && !this.storage.getItem("quizlab-records-before-v2"))
         this.storage.setItem("quizlab-records-before-v2", raw);
@@ -156,13 +171,19 @@
       }
       this.write(
         "quizlab-records",
-        normalize([...normalize(this.read("quizlab-records", [])), record])
+        normalizeRecords([...normalizeRecords(this.read("quizlab-records", [])), record])
           .sort(chronological)
           .slice(-100),
       );
     }
     stats() {
       const a = this.records();
+      if (typeof root.studyQuizGo === "function") {
+        const { attempts, best, averageAccuracy } = goRecords("records-summary", {
+          records: a,
+        });
+        return { attempts, best, averageAccuracy };
+      }
       const known = a.filter((r) => r.correct != null);
       return {
         attempts: a.length,
@@ -175,13 +196,11 @@
       };
     }
     missedQuestionIds() {
+      const records = this.records().sort(chronological);
+      if (typeof root.studyQuizGo === "function")
+        return goRecords("records-summary", { records }).missedIds;
       const missed = new Set();
-      const chronological = this.records().sort(
-        (a, b) =>
-          (Date.parse(a.completedAt || a.date) || 0) -
-          (Date.parse(b.completedAt || b.date) || 0),
-      );
-      for (const r of chronological) {
+      for (const r of records) {
         if (r.answers)
           for (const answer of r.answers) {
             if (answer.correct) missed.delete(answer.questionId);
@@ -208,7 +227,7 @@
         !data ||
         !Array.isArray(data.records) ||
         !validProfile(data.profile) ||
-        data.records.some((r) => !validRecord(r))
+        data.records.some((r) => !validateRecord(r))
       )
         throw Error("프로필과 유효한 기록 배열이 필요합니다.");
       if (
@@ -222,7 +241,7 @@
       if (raw)
         this.storage.setItem("quizlab-records-recovery-" + Date.now(), raw);
       const previousProfile = this.storage.getItem("quizlab-profile");
-      const merged = normalize([...this.records(), ...data.records])
+      const merged = normalizeRecords([...this.records(), ...data.records])
         .sort(chronological)
         .slice(-100);
       this.write("quizlab-profile", profileFields(data.profile));

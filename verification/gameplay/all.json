@@ -1,0 +1,14 @@
+{
+  "op": "quiz",
+  "mode": "all",
+  "length": 10,
+  "random": [0.99, 0, 0.51, 0.28, 0.77],
+  "actions": [
+    {"action":"hint"},
+    {"action":"correct"},
+    {"action":"next"},
+    {"action":"answer","index":-1},
+    {"action":"next"},
+    {"action":"correct"}
+  ]
+}

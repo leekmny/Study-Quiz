@@ -1,0 +1,6 @@
+[
+  {"id":"records-filter-deduplicate","fixture":"normalize.json"},
+  {"id":"records-weighted-mastery","fixture":"summary.json"},
+  {"id":"records-reject-invalid","fixture":"invalid.json"},
+  {"id":"records-no-attempts","fixture":"empty.json"}
+]

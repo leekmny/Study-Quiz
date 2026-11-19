@@ -1,0 +1,25 @@
+{
+  "op": "quiz",
+  "mode": "category",
+  "category": "과학",
+  "difficulty": "easy",
+  "length": 3,
+  "language": "en",
+  "random": [0],
+  "actions": [
+    {"action": "next"},
+    {"action": "answer", "index": 1.5},
+    {"action": "answer", "index": 4},
+    {"action": "correct"},
+    {"action": "hint"},
+    {"action": "correct"},
+    {"action": "next"},
+    {"action": "hint"},
+    {"action": "hint"},
+    {"action": "correct"},
+    {"action": "next"},
+    {"action": "wrong"},
+    {"action": "next"},
+    {"action": "next"}
+  ]
+}
